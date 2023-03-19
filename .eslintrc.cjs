@@ -8,6 +8,11 @@ module.exports = {
   rules: {
     "import/no-extraneous-dependencies": "off",
     'import/prefer-default-export': 'off',
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      ts: 'never',
+      vue: 'always',
+    }],
   },
   'extends': [
     'airbnb',
@@ -20,4 +25,14 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+      },
+    },
+  }
 }

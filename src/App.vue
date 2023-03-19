@@ -12,7 +12,9 @@ const items = computed(() => repo.items);
 <template>
 
   <main class="infinite">
+    <!-- 標題 -->
     <h1>Zhang Repo List:</h1>
+    <!-- 無限滾動Component -->
     <InfiniteScroll v-slot="{item}"
                     :items="items"
                     :has-more="repo.hasMore"
@@ -27,43 +29,28 @@ const items = computed(() => repo.items);
 </template>
 
 <style scoped>
-
-header {
-  line-height: 1.5;
+.infinite {
+  padding: 0 20vw;
+  height: 660px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.item {
+  display: flex;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  background-color: #FFFFFF;
 }
 
-@media (min-width: 1024px) {
-  header {
-  }
+.item :is(h2, p) {
+  margin: 0;
+}
 
-  .infinite {
-    padding: 0 20vw;
-    height: 660px;
-  }
-
-  .item {
-    display: flex;
-    height: 100px;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    background-color: #FFFFFF;
-  }
-
-  .item :is(h2, p) {
-    margin: 0;
-  }
-
-  .item :is(h2) {
-    font-size: 20px;
-  }
+.item h2 {
+  font-size: 20px;
 }
 </style>
