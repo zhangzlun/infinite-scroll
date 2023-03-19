@@ -1,23 +1,33 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import {computed} from "vue";
+
+import InfiniteScroll from "@/components/InfiniteScroll.vue";
+import {useReposStore} from "@/stores/repos";
+
+
+const repo = useReposStore();
+const items = computed(() => repo.items);
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
+  <main class="infinite">
+    <h1>Zhang Repo List:</h1>
+    <InfiniteScroll v-slot="{item}"
+                    :items="items"
+                    :has-more="repo.hasMore"
+                    :fetch-data="repo.fetchRepos">
+      <li :key="item.id" class="item">
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+        <a :href="item.link">{{ item.link }}</a>
+      </li>
+    </InfiniteScroll>
   </main>
 </template>
 
 <style scoped>
+
 header {
   line-height: 1.5;
 }
@@ -29,19 +39,31 @@ header {
 
 @media (min-width: 1024px) {
   header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .infinite {
+    padding: 0 20vw;
+    height: 660px;
   }
 
-  header .wrapper {
+  .item {
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    height: 100px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background-color: #FFFFFF;
+  }
+
+  .item :is(h2, p) {
+    margin: 0;
+  }
+
+  .item :is(h2) {
+    font-size: 20px;
   }
 }
 </style>
